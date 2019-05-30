@@ -11,6 +11,8 @@
     <RepositoryUrl>https://github.com/pauldbentley/EnsuredOutcomes</RepositoryUrl>
     <Copyright>Copyright © Paul Bentley 2019</Copyright>
     <CodeAnalysisRuleSet>EnsuredOutcomes.ruleset</CodeAnalysisRuleSet>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>.NET result wrapper and guard classes</Description>
   </PropertyGroup>
 
   <ItemGroup>

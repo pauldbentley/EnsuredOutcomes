@@ -111,8 +111,8 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="parameterName">The name of the parameter.</param>
         /// <returns>A <see cref="ArgumentNullException"/> instance.</returns>
-        public static ArgumentNullException ArgumentNull(string parameterName)
-            => new ArgumentNullException(parameterName);
+        public static ArgumentNullException ArgumentNull(string parameterName) =>
+            new ArgumentNullException(parameterName);
 
         /// <summary>
         /// Creates a new <see cref="ArgumentOutOfRangeException"/> instance.
