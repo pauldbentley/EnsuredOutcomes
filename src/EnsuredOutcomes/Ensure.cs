@@ -15,7 +15,7 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void NotNull(object value, string parameterName) =>
+        public static void NotNull([ValidatedNotNull]object value, string parameterName) =>
             Exceptions.Throw(Exceptions.WhenNull(value, parameterName));
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void NotNullOrEmpty(string value, string parameterName) =>
+        public static void NotNullOrEmpty([ValidatedNotNull]string value, string parameterName) =>
             Exceptions.Throw(Exceptions.WhenNullOrEmpty(value, parameterName));
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void NotNullOrWhitespace(string value, string parameterName) =>
+        public static void NotNullOrWhitespace([ValidatedNotNull]string value, string parameterName) =>
             Exceptions.Throw(Exceptions.WhenNullOrWhitespace(value, parameterName));
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace EnsuredOutcomes
         /// <param name="minimumLength">The minimum length.</param>
         /// <param name="maximumLength">The maximum length.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void LengthBetween(string value, int minimumLength, int maximumLength, string parameterName) =>
+        public static void LengthBetween([ValidatedNotNull]string value, int minimumLength, int maximumLength, string parameterName) =>
             Exceptions.Throw(Exceptions.WhenLengthIsIncorrect(value, minimumLength, maximumLength, parameterName));
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace EnsuredOutcomes
         /// <param name="value">The value to test.</param>
         /// <param name="pattern">The pattern.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void MatchesPattern(string value, string pattern, string parameterName) =>
+        public static void MatchesPattern([ValidatedNotNull]string value, string pattern, string parameterName) =>
             Exceptions.Throw(Exceptions.WhenDoesNotMatchPattern(value, pattern, parameterName));
 
         /// <summary>

@@ -13,12 +13,12 @@ namespace EnsuredOutcomes
     public static class Exceptions
     {
         /// <summary>
-        /// Tests if the <paramref name="value"/> is null.
+        /// Tests if <paramref name="value"/> is null.
         /// </summary>
-        /// <param name="value">The value to check.</param>
+        /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentNullException"/> if the test is true, null otherwise.</returns>
-        public static ArgumentNullException WhenNull(object value, string parameterName)
+        /// <returns>An <see cref="ArgumentNullException"/> if <paramref name="value"/> is null; otherwise, null.</returns>
+        public static ArgumentNullException WhenNull([ValidatedNotNull]object value, string parameterName)
         {
             return value == null
                 ? ArgumentNull(parameterName)
@@ -26,12 +26,12 @@ namespace EnsuredOutcomes
         }
 
         /// <summary>
-        /// Tests if the <paramref name="value"/> is null or empty.
+        /// Tests if <paramref name="value"/> is null or an empty string.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentException"/> if the test is true, null otherwise.</returns>
-        public static ArgumentException WhenNullOrEmpty(string value, string parameterName)
+        /// <returns>An <see cref="ArgumentException"/> if <paramref name="value"/> is null or an empty string; otherwise, null.</returns>
+        public static ArgumentException WhenNullOrEmpty([ValidatedNotNull]string value, string parameterName)
         {
             return
                 (ArgumentException)WhenNull(value, parameterName) ??
@@ -39,12 +39,12 @@ namespace EnsuredOutcomes
         }
 
         /// <summary>
-        /// Tests if the <paramref name="value"/> is null or whitespace.
+        /// Tests if <paramref name="value"/> is null or whitespace.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentException"/> if the test is true, null otherwise.</returns>
-        public static ArgumentException WhenNullOrWhitespace(string value, string parameterName)
+        /// <returns>An <see cref="ArgumentException"/> if <paramref name="value"/> is null or whitespace; otherwise, null.</returns>
+        public static ArgumentException WhenNullOrWhitespace([ValidatedNotNull]string value, string parameterName)
         {
             return
                 WhenNullOrEmpty(value, parameterName) ??
@@ -53,13 +53,14 @@ namespace EnsuredOutcomes
 
         /// <summary>
         /// Tests if the length of <paramref name="value"/> is outside a minimum and maximum.
+        /// It is assumed that callers would have chacked for null or empty prior to this call if this was a contraint.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="minimumLength">The minimum length.</param>
         /// <param name="maximumLength">The maximum length.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentOutOfRangeException"/> instance if the test fails, null otherwise.</returns>
-        public static ArgumentOutOfRangeException WhenLengthIsIncorrect(string value, int minimumLength, int maximumLength, string parameterName)
+        /// <returns>An <see cref="ArgumentOutOfRangeException"/> if <paramref name="value"/> is null or has length outside of the given range; otherwise null.</returns>
+        public static ArgumentOutOfRangeException WhenLengthIsIncorrect([ValidatedNotNull]string value, int minimumLength, int maximumLength, string parameterName)
         {
             // It is assumed that callers would have chacked for null or
             // empty prior to this call if this was a contraint.
@@ -78,13 +79,13 @@ namespace EnsuredOutcomes
         }
 
         /// <summary>
-        /// Tests if the <paramref name="value"/> matches a given pattern.
+        /// Tests if <paramref name="value"/> not dose not match a given pattern.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="pattern">The pattern.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentOutOfRangeException"/> instance if the test fails, null otherwise.</returns>
-        public static ArgumentOutOfRangeException WhenDoesNotMatchPattern(string value, string pattern, string parameterName)
+        /// <returns>An <see cref="ArgumentOutOfRangeException"/> if the pattern match fails; otherwise, null.</returns>
+        public static ArgumentOutOfRangeException WhenDoesNotMatchPattern([ValidatedNotNull]string value, string pattern, string parameterName)
         {
             return !Regex.IsMatch(value, pattern)
                 ? ArgumentOutOfRange(parameterName, value, $"Value was out of range. Must match the pattern {pattern}.")
@@ -92,13 +93,13 @@ namespace EnsuredOutcomes
         }
 
         /// <summary>
-        /// Tests if the <paramref name="value"/> is greater than or equal to a minimum value.
+        /// Tests if <paramref name="value"/> is less than to a minimum value.
         /// Dates are converted to universal time before comparison.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="minValue">The minimum value.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>An <see cref="ArgumentOutOfRangeException"/> instance if the test fails, null otherwise.</returns>
+        /// <returns>An <see cref="ArgumentOutOfRangeException"/> if <paramref name="value"/> is less than the minimum value; otherwise, null.</returns>
         public static ArgumentOutOfRangeException WhenOutOfRange(DateTime value, DateTime minValue, string parameterName)
         {
             return value.ToUniversalTime() < minValue.ToUniversalTime()

@@ -9,7 +9,7 @@ namespace EnsuredOutcomes
     /// <summary>
     /// Extension methods for <see cref="Outcomes"/>.
     /// </summary>
-    internal static class OutcomeExtensions
+    public static class OutcomeExtensions
     {
         /// <summary>
         /// Adds the value of the outcome to the collection, or throws the first exception on failure.
