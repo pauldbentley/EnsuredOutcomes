@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Paul Bentley 2019. All rights reserved.
 // Licensed under the MIT license. See the LICENSE file in the project root for full license information.
 
+#define CONTRACTS_FULL
+
 namespace EnsuredOutcomes
 {
     using System;
@@ -20,10 +22,19 @@ namespace EnsuredOutcomes
         /// <returns>An <see cref="ArgumentNullException"/> if <paramref name="value"/> is null; otherwise, null.</returns>
         public static ArgumentNullException WhenNull([ValidatedNotNull]object value, string parameterName)
         {
-            return value == null
+            return InputValue.IsNull(value)
                 ? ArgumentNull(parameterName)
                 : null;
         }
+
+        /// <summary>
+        /// Throws a <see cref="ArgumentNullException"/> if <paramref name="value"/> is null.
+        /// </summary>
+        /// <param name="value">The input value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException">If <paramref name="value"/> is null.</exception>
+        public static void ThrowIfNull([ValidatedNotNull]object value, string parameterName) =>
+            Throw(WhenNull(value, parameterName));
 
         /// <summary>
         /// Tests if <paramref name="value"/> is null or an empty string.
@@ -35,7 +46,7 @@ namespace EnsuredOutcomes
         {
             return
                 (ArgumentException)WhenNull(value, parameterName) ??
-                (string.IsNullOrEmpty(value) ? ArgumentOutOfRange(parameterName, null, "Value was out of range.  Must not be empty.") : null);
+                (InputValue.IsNullOrEmpty(value) ? ArgumentOutOfRange(parameterName, null, "Value was out of range.  Must not be empty.") : null);
         }
 
         /// <summary>

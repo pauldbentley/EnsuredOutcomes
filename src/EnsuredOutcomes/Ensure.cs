@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Paul Bentley 2019. All rights reserved.
 // Licensed under the MIT license. See the LICENSE file in the project root for full license information.
 
+#define CONTRACTS_FULL
+
 namespace EnsuredOutcomes
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Ensures against invalid parameter input.
@@ -15,8 +18,15 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void NotNull([ValidatedNotNull]object value, string parameterName) =>
-            Exceptions.Throw(Exceptions.WhenNull(value, parameterName));
+        public static void NotNull([ValidatedNotNull]object value, string parameterName)
+        {
+            if (value == null)
+            {
+                throw Exceptions.ArgumentNull(parameterName);
+            }
+
+            Contract.EndContractBlock();
+        }
 
         /// <summary>
         /// Throws an exception if <paramref name="value"/> is null or empty.
