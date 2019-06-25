@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Paul Bentley 2019. All rights reserved.
 // Licensed under the MIT license. See the LICENSE file in the project root for full license information.
 
-#define CONTRACTS_FULL
-
 namespace EnsuredOutcomes
 {
     using System;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// Ensures against invalid parameter input.
@@ -18,15 +15,8 @@ namespace EnsuredOutcomes
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        public static void NotNull([ValidatedNotNull]object value, string parameterName)
-        {
-            if (value == null)
-            {
-                throw Exceptions.ArgumentNull(parameterName);
-            }
-
-            Contract.EndContractBlock();
-        }
+        public static void NotNull([ValidatedNotNull]object value, string parameterName) =>
+            Exceptions.ThrowWhenNull(value, parameterName);
 
         /// <summary>
         /// Throws an exception if <paramref name="value"/> is null or empty.
@@ -34,7 +24,7 @@ namespace EnsuredOutcomes
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
         public static void NotNullOrEmpty([ValidatedNotNull]string value, string parameterName) =>
-            Exceptions.Throw(Exceptions.WhenNullOrEmpty(value, parameterName));
+            Exceptions.ThrowWhenNullOrEmpty(value, parameterName);
 
         /// <summary>
         /// Throws an exception if <paramref name="value"/> is null or whitespace.
@@ -42,7 +32,7 @@ namespace EnsuredOutcomes
         /// <param name="value">The value to test.</param>
         /// <param name="parameterName">The name of the parameter.</param>
         public static void NotNullOrWhitespace([ValidatedNotNull]string value, string parameterName) =>
-            Exceptions.Throw(Exceptions.WhenNullOrWhitespace(value, parameterName));
+            Exceptions.Throw(Exceptions.WhenNullOrWhiteSpace(value, parameterName));
 
         /// <summary>
         /// Throws an exception if the length  of <paramref name="value"/> is outside a minimum and maximum.
