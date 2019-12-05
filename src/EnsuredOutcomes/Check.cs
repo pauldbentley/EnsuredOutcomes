@@ -50,7 +50,7 @@ namespace EnsuredOutcomes
 
             // the length of a null string is 0;
             int length = value?.Length ?? 0;
-            return length < minimumLength || length > maximumLength;
+            return length >= minimumLength && length <= maximumLength;
         }
 
         /// <summary>
